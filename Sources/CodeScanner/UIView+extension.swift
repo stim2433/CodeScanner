@@ -18,8 +18,8 @@ extension UIView {
             path.move(to: CGPoint(x: cornerRadius, y: 0))
             path.addArc(withCenter: CGPoint(x: cornerRadius, y: cornerRadius), radius: cornerRadius, startAngle: .pi, endAngle: .pi * 1.5, clockwise: true)
             
-//            path.addLine(to: CGPoint(x: self.bounds.width - cornerRadius, y: 0)) // right top
-//            path.addArc(withCenter: CGPoint(x: self.bounds.width - cornerRadius, y: cornerRadius), radius: cornerRadius, startAngle: .pi * 1.5, endAngle: 0, clockwise: true)
+            path.addLine(to: CGPoint(x: self.bounds.width - cornerRadius, y: 0)) // right top
+            path.addArc(withCenter: CGPoint(x: self.bounds.width - cornerRadius, y: cornerRadius), radius: cornerRadius, startAngle: .pi * 1.5, endAngle: 0, clockwise: true)
 //            
 //            path.addLine(to: CGPoint(x: self.bounds.width, y: self.bounds.height - cornerRadius)) // right bottom
 //            path.addArc(withCenter: CGPoint(x: self.bounds.width - cornerRadius, y: self.bounds.height - cornerRadius), radius: cornerRadius, startAngle: 0, endAngle: .pi * 0.5, clockwise: true)
