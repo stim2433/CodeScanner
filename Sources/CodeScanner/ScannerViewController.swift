@@ -120,8 +120,6 @@ extension CodeScannerView {
         
         let scanAreaView: UIView = {
             let view = UIView()
-//            view.layer.borderColor = UIColor.white.cgColor
-            view.addRoundedCornerBorder(cornerRadius: 20, borderWidth: 4, borderColor: .white)
             view.translatesAutoresizingMaskIntoConstraints = false
             return view
         }()
@@ -299,6 +297,7 @@ extension CodeScannerView {
             guard showViewfinder
             else { return }
             
+            scanAreaView.addRoundedCornerBorder(size: scanSize, cornerRadius: 5, borderWidth: 4, borderColor: .white)
             view.addSubview(scanAreaView)
             
             NSLayoutConstraint.activate([
