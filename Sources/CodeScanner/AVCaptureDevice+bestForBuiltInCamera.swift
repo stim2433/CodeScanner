@@ -47,7 +47,6 @@ extension AVCaptureDevice {
             minimumCodeSize: minimumCodeSize,
             previewFillPercentage: Float(rectOfInterestWidth)
         )
-        
         guard minimumSubjectDistanceForCode < deviceMinimumFocusDistance else { return }
         
         let zoomFactor = deviceMinimumFocusDistance / minimumSubjectDistanceForCode

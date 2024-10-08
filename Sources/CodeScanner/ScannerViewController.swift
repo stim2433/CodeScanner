@@ -22,6 +22,7 @@ extension CodeScannerView {
         var didFinishScanning = false
         var lastTime = Date(timeIntervalSince1970: 0)
         private let showViewfinder: Bool
+        private let scanSize: CGFloat
         
         let fallbackVideoCaptureDevice = AVCaptureDevice.default(for: .video)
         
@@ -34,14 +35,16 @@ extension CodeScannerView {
             }
         }
 
-        public init(showViewfinder: Bool = false, parentView: CodeScannerView) {
+        public init(showViewfinder: Bool = false, scanSize: CGFloat, parentView: CodeScannerView) {
             self.parentView = parentView
+            self.scanSize = scanSize
             self.showViewfinder = showViewfinder
             super.init(nibName: nil, bundle: nil)
         }
 
         required init?(coder: NSCoder) {
             self.showViewfinder = false
+            self.scanSize = 0
             super.init(coder: coder)
         }
         
@@ -113,6 +116,14 @@ extension CodeScannerView {
             let imageView = UIImageView(image: image)
             imageView.translatesAutoresizingMaskIntoConstraints = false
             return imageView
+        }()
+        
+        let scanAreaView: UIView = {
+            let view = UIView()
+            view.layer.borderColor = UIColor.white.cgColor
+            view.addRoundedCornerBorder(cornerRadius: 20, borderWidth: 4, borderColor: .white)
+            view.translatesAutoresizingMaskIntoConstraints = false
+            return view
         }()
         
         private lazy var manualCaptureButton: UIButton = {
@@ -195,6 +206,13 @@ extension CodeScannerView {
                     self.captureSession?.startRunning()
                 }
             }
+            
+            view.layoutIfNeeded()
+            let scanRectConverted = previewLayer.metadataOutputRectConverted(fromLayerRect: scanAreaView.frame)
+            
+            guard let metadataOutput = captureSession.outputs.first as? AVCaptureMetadataOutput
+            else { return }
+            metadataOutput.rectOfInterest = scanRectConverted
         }
 
         private func handleCameraPermission() {
@@ -278,15 +296,15 @@ extension CodeScannerView {
         }
 
         private func addViewFinder() {
-            guard showViewfinder, let imageView = viewFinder else { return }
+            guard showViewfinder else { return }
 
             view.addSubview(imageView)
 
             NSLayoutConstraint.activate([
-                imageView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-                imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-                imageView.widthAnchor.constraint(equalToConstant: 200),
-                imageView.heightAnchor.constraint(equalToConstant: 200),
+                scanAreaView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+                scanAreaView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+                scanAreaView.widthAnchor.constraint(equalToConstant: scanSize),
+                scanAreaView.heightAnchor.constraint(equalToConstant: scanSize),
             ])
         }
 
