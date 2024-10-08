@@ -39,8 +39,6 @@ extension UIView {
         path.addArc(withCenter: CGPoint(x: cornerRadius, y: size - cornerRadius), radius: cornerRadius, startAngle: .pi * 0.5, endAngle: .pi, clockwise: true)
         path.addLine(to: CGPoint(x: 0, y: size - size / 4))
         
-        path.close()
-        
         borderLayer.path = path.cgPath
         borderLayer.strokeColor = borderColor.cgColor
         borderLayer.lineWidth = borderWidth
