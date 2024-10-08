@@ -298,8 +298,6 @@ extension CodeScannerView {
         private func addViewFinder() {
             guard showViewfinder else { return }
 
-            view.addSubview(imageView)
-
             NSLayoutConstraint.activate([
                 scanAreaView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
                 scanAreaView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
